@@ -29,7 +29,7 @@ try:
     volver_home = driver.find_element(by=By.XPATH, value="//*[@id='logo']/a/img[1]")
     volver_home.click()
 
-    time.sleep(3)
+    time.sleep(2)
     driver.close()
 
     print("Test: Funcionamiento del link 'Contacto': Pass")
