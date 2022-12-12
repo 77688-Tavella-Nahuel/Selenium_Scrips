@@ -2,44 +2,55 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import time
+import os
 
-driver=webdriver.Chrome(executable_path=r"C:\Drivers\chromedriver.exe")
-driver.maximize_window()
+try:
+    os.system("cls")
+    options = webdriver.ChromeOptions()
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
-#Abrir sitio web
-driver.get("https://centroestant.com.ar/")
+    driver=webdriver.Chrome(executable_path=r"C:\Drivers\chromedriver.exe", options=options)
+    driver.maximize_window()
 
-#Abrir link "Contacto"
-click_button = driver.find_element(by=By.LINK_TEXT, value="Contacto")
-click_button.click()
-time.sleep(2)
+    #Abrir sitio web
+    driver.get("https://centroestant.com.ar/")
 
-#Llenar formulario
-nombre = driver.find_element(by=By.NAME, value="your-name")
-nombre.send_keys("Nahuel")
+    #Abrir link "Contacto"
+    click_button = driver.find_element(by=By.LINK_TEXT, value="Contacto")
+    click_button.click()
+    time.sleep(2)
 
-correo = driver.find_element(by=By.NAME, value="your-email")
-correo.send_keys("soynahuel@gmail.com")
+    #Llenar formulario
+    nombre = driver.find_element(by=By.NAME, value="your-name")
+    nombre.send_keys("Nahuel")
 
-motivo = driver.find_elements(by=By.TAG_NAME, value="Option")
-motivo[3].click()
+    correo = driver.find_element(by=By.NAME, value="your-email")
+    correo.send_keys("soynahuel@gmail.com")
 
-asunto = driver.find_element(by=By.NAME, value="your-subject")
-asunto.send_keys("quiero devolver")
+    motivo = driver.find_elements(by=By.TAG_NAME, value="Option")
+    motivo[3].click()
 
-msj = driver.find_element(by=By.NAME, value="your-message")
-msj.send_keys("No funciona")
+    asunto = driver.find_element(by=By.NAME, value="your-subject")
+    asunto.send_keys("quiero devolver")
 
-time.sleep(2)
+    msj = driver.find_element(by=By.NAME, value="your-message")
+    msj.send_keys("No funciona")
 
-#Enviar formulario
-click_button_send = driver.find_element(by=By.XPATH, value="//*[@id='wpcf7-f11-p648-o1']/form/p[6]/input")
-click_button_send.click()
-time.sleep(7)
+    time.sleep(2)
 
-#Volver a la home
-volver_home = driver.find_element(by=By.XPATH, value="//*[@id='logo']/a/img[1]")
-volver_home.click()
+    #Enviar formulario
+    click_button_send = driver.find_element(by=By.XPATH, value="//*[@id='wpcf7-f11-p648-o1']/form/p[6]/input")
+    click_button_send.click()
+    time.sleep(8)
 
-time.sleep(3)
-driver.close()
+    #Volver a la home
+    volver_home = driver.find_element(by=By.XPATH, value="//*[@id='logo']/a/img[1]")
+    volver_home.click()
+
+    time.sleep(2)
+    driver.close()
+
+    print("Test: Envío del formulario en el link 'Contacto': Pass")
+
+except:
+    print("Fail")
