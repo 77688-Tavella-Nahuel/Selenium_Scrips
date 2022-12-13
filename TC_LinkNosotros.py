@@ -4,39 +4,42 @@ from pynput.mouse import Button, Controller
 import os
 import time
 
-try:
-    os.system("cls")
-    options = webdriver.ChromeOptions()
-    options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    
-    driver=webdriver.Chrome(executable_path=r"C:\Drivers\chromedriver.exe",options=options)
-    driver.maximize_window()
+os.system("cls")
+options = webdriver.ChromeOptions()
+options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
-    #Abrir sitio web
-    driver.get("https://centroestant.com.ar/")
+driver=webdriver.Chrome(executable_path=r"C:\Drivers\chromedriver.exe",options=options)
+driver.maximize_window()
 
-    #Abrir link "Nosotros"
-    click_button = driver.find_element(by=By.LINK_TEXT, value="Nosotros")
-    click_button.click()
-    time.sleep(4)
+#Abrir sitio web
+driver.get("https://centroestant.com.ar/")
+title = driver.title
+assert "INICIO - CENTRO ESTANT" == title, "No coinciden las páginas"
 
-    #Reproducir video
-    mouse=Controller()
-    driver.execute_script("window.scrollTo(0,600)")
-    mouse.position = (800,700)
-    time.sleep(2)
-    mouse.press(Button.left)
-    mouse.release(Button.left)
-    time.sleep(5)
+#Abrir link "Nosotros"
+click_button = driver.find_element(by=By.LINK_TEXT, value="Nosotros")
+click_button.click()
 
-    #Volver a la home
-    volver_home = driver.find_element(by=By.XPATH, value="//*[@id='logo']/a")
-    volver_home.click()
+nosotros = "Somos una empresa argentina, dedicada a la producción de muebles."
+h3 = driver.find_element(by=By.XPATH,value="//*[@id='text-box-1956396795']/div/div/h3/strong").text
+assert nosotros == h3, "No se ingreso a la seccion 'Nosotros'"
 
-    time.sleep(2)
-    driver.close()
-    
-    print("Test: Funcionamiento del link 'Nosotros': Pass")
+time.sleep(4)
 
-except:
-    print("Fail")
+#Reproducir video
+mouse=Controller()
+driver.execute_script("window.scrollTo(0,600)")
+mouse.position = (800,700)
+time.sleep(2)
+mouse.press(Button.left)
+mouse.release(Button.left)
+time.sleep(5)
+
+#Volver a la home
+volver_home = driver.find_element(by=By.XPATH, value="//*[@id='logo']/a")
+volver_home.click()
+
+time.sleep(2)
+driver.close()
+
+print("Test: Funcionamiento del link 'Nosotros': Pass")
